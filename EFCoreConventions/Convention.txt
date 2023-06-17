@@ -1,0 +1,39 @@
+﻿1- Eğer model sınıfı yazıyorsak. İsmi ıd ile biten
+yada ismi sadece ıd olan property var ise primary key yapıyor
+int gibi sayısal tip ise ıdentity column yapar.
+
+2-  Categoty class ında 
+public ICollection<Product> Products { get; set; } tanımlarsam
+Bire Çok ilişki tanımlanmış olur.Sadece bu şekilde Nullable yapar.
+Nullable olmasını istemiyorsam Product class ına CategoryId (aynı tip ve isim olacak) property ranımlamam gerekiyor.
+
+3- Çoka Çok ilişki
+
+Product tablomuza Order a Bire Çok yapsın diye
+public ICollection<Order> Orders { get; set; }
+
+Customer tablomuza Order a Bire Çok yapsın diye
+public ICollection<Order> Orders { get; set; }
+
+Product ve Customer Çoka Çok olarak bağlanmış oldu.
+Order tada productId ve CustomerId yazılması zorunlu.
+
+4- DbContext Class ına 
+public  DbSet<Category> Categories { get; set; }
+		// product ı yazmasakta db de oluşturur. Ama product tablosunda sorgu yazılamaz.
+		Product tablosuna CategoryId kolonu oluşturuyor. (Biz Product classında CategoryId property si oluşturmamıştık)
+		Tipini int olarak ayarlıyor.
+		Nullable =true yapıyor.
+		PK_Product constraint var
+		Birde ForeignKey constraint i koymuş.
+
+5- allow Nulls olmasın. Bir ürün kaydedilirken mutlaka kategorisi olsun.
+Product a int olarak CategoryId tanımlarız.
+
+6- Bire Bir ilişki
+Customer tablosuna Bire Bir bağlamak istediğim tablonun Navigation Property sini ekledim.
+ public CustomerDetail? CustomerDetail { get; set; }
+
+ CustomerDatail tablosuna da Bire Bir bağlamak istediğim tablonun Navigation Property sini ekledim.
+   public Customer Customer { get; set; } = null!;
+
